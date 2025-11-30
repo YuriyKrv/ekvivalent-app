@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// Імпортуємо ваш новий Лендінг (перевірте, що файл src/components/LandingPage.jsx існує!)
+// Імпортуємо ваш новий Лендінг
 import LandingPage from './components/LandingPage'; 
 
 // Імпортуємо графіки
@@ -342,8 +342,11 @@ export default function App() {
     setIsStarted(true);
   };
 
+  // ОСНОВНА ЛОГІКА ПЕРЕМИКАННЯ:
+  // Якщо isStarted === false, ми ПОВИННІ бачити LandingPage.
+  // Якщо isStarted === true, ми бачимо Dashboard (або інші сторінки).
+  
   if (!isStarted) {
-    // Переконайтеся, що файл src/components/LandingPage.jsx існує!
     return <LandingPage onStart={handleStart} />;
   }
 
