@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// Імпортуємо ваш новий Лендінг
+// Імпортуємо ваш новий Лендінг (перевірте, що файл src/components/LandingPage.jsx існує!)
 import LandingPage from './components/LandingPage'; 
 
 // Імпортуємо графіки
@@ -343,6 +343,7 @@ export default function App() {
   };
 
   if (!isStarted) {
+    // Переконайтеся, що файл src/components/LandingPage.jsx існує!
     return <LandingPage onStart={handleStart} />;
   }
 
