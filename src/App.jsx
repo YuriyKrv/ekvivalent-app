@@ -175,8 +175,7 @@ const DashboardView = ({ setView }) => (
       />
       <Card 
         title="Доступний Кредитний Ліміт" 
-        value="$350,000" 
-        subtext="Pre-approved by Bushel Ukraine"
+        value="$650,000" 
         trend="neutral"
         trendValue="Готовий до використання"
         icon={TrendingUp}
@@ -285,7 +284,7 @@ const DashboardView = ({ setView }) => (
        <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl p-6 text-white shadow-lg flex flex-col justify-between">
           <div>
             <h3 className="font-bold text-lg mb-2">Потрібні добрива?</h3>
-            <p className="text-blue-100 text-sm mb-4">Обміняйте ваше зерно на МТР без грошей через аграрну ноту. Миттєве погодження.</p>
+            <p className="text-blue-100 text-sm mb-4">Обміняйте ваше зерно на МТЦ без грошей через аграрну ноту. Миттєве погодження.</p>
           </div>
           <button 
             onClick={() => setView('marketplace')}
@@ -397,7 +396,7 @@ export default function App() {
           <div className="flex items-center gap-4">
              <div className="hidden md:flex flex-col items-end mr-4">
                 <span className="text-xs text-slate-400 uppercase font-semibold">Загальна Ліквідність</span>
-                <span className="text-lg font-bold text-slate-900">₴ 48,250,000</span>
+                <span className="text-lg font-bold text-slate-900">₴ 53,975,000</span>
              </div>
             <button className="p-2 text-slate-400 hover:text-slate-600 hover:bg-white rounded-full transition-colors relative">
               <Bell size={20} />
