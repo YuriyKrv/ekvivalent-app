@@ -136,7 +136,7 @@ function Hero({ onStart }) {
               EKVIVALENT
             </span>
           </div>
-          <div className="text-4xl md:text-5xl lg:text-6xl text-white/90 text-balance">Двигун вашого агробізнесу</div>
+          <div className="text-4xl md:text-5xl lg:text-6xl text-white/90 text-balance">Рушій твоїх можливостей в агробізнесі</div>
         </h1>
 
         <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed text-balance">
