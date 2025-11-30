@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-// Імпортуємо компоненти для графіків
+// Імпортуємо ваш новий Лендінг
+import LandingPage from './components/LandingPage'; 
+
+// Імпортуємо графіки
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+// Імпортуємо іконки
 import { 
   LayoutDashboard, 
   Wallet, 
@@ -18,15 +22,14 @@ import {
   Landmark,
   Truck,
   ShieldCheck,
-  ExternalLink,
-  PieChart as PieChartIcon // Перейменовуємо іконку, щоб не конфліктувала з графіком
+  ExternalLink
 } from 'lucide-react';
 
-// --- ДАНІ ДЛЯ ДІАГРАМИ (HARDCODED DATA) ---
+// --- ДАНІ ДЛЯ ДІАГРАМИ ---
 const portfolioData = [
-  { name: 'Пшениця (2.5k т)', value: 525000, color: '#d97706' }, // Amber-600
-  { name: 'Кукурудза (1.8k т)', value: 333000, color: '#facc15' }, // Yellow-400
-  { name: 'Соняшник (1.1k т)', value: 418000, color: '#16a34a' }, // Green-600
+  { name: 'Пшениця (2.5k т)', value: 525000, color: '#d97706' },
+  { name: 'Кукурудза (1.8k т)', value: 333000, color: '#facc15' },
+  { name: 'Соняшник (1.1k т)', value: 418000, color: '#16a34a' },
 ];
 
 const RADIAN = Math.PI / 180;
@@ -36,7 +39,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
   return (
-    <text x={x} y={y} fill="black" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" className="text-xs font-bold">
+    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" className="text-xs font-bold">
       {`${(percent * 100).toFixed(0)}%`}
     </text>
   );
@@ -90,7 +93,7 @@ const MarketplaceView = () => (
   </div>
 );
 
-// --- ЗАГАЛЬНІ КОМПОНЕНТИ ---
+// --- ЗАГАЛЬНІ КОМПОНЕНТИ (Card, GrainRow) ---
 const Card = ({ title, value, subtext, trend, trendValue, icon: Icon }) => (
   <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
     <div className="flex justify-between items-start mb-4">
@@ -149,7 +152,7 @@ const GrainRow = ({ crop, type, elevator, volume, price, value, trend }) => (
   </tr>
 );
 
-// --- ГОЛОВНА СТОРІНКА (DASHBOARD) ---
+// --- КОМПОНЕНТ: ГОЛОВНИЙ ЕКРАН (DASHBOARD) ---
 const DashboardView = ({ setView }) => (
   <>
     {/* Stats Grid */}
@@ -173,7 +176,7 @@ const DashboardView = ({ setView }) => (
       <Card 
         title="Доступний Кредитний Ліміт" 
         value="$350,000" 
-        subtext="Під заставу аграрної розписки чи ноти"
+        subtext="Pre-approved by Bushel Ukraine"
         trend="neutral"
         trendValue="Готовий до використання"
         icon={TrendingUp}
@@ -183,7 +186,7 @@ const DashboardView = ({ setView }) => (
     {/* БЛОК: Grain Wallet + PIE CHART */}
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
       
-      {/* Ліва частина: Таблиця (займає 2/3 ширини) */}
+      {/* Ліва частина: Таблиця */}
       <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
         <div className="p-6 border-b border-slate-100 flex justify-between items-center">
           <div>
@@ -214,7 +217,7 @@ const DashboardView = ({ setView }) => (
         </div>
       </div>
 
-      {/* Права частина: Діаграма (займає 1/3 ширини) */}
+      {/* Права частина: Діаграма */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 flex flex-col">
         <h2 className="text-lg font-bold text-slate-900 mb-4">Структура Портфелю</h2>
         <div className="flex-1 min-h-[250px] relative">
@@ -242,14 +245,12 @@ const DashboardView = ({ setView }) => (
                <Legend verticalAlign="bottom" height={36}/>
              </PieChart>
            </ResponsiveContainer>
-           {/* Центр бублика */}
            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -mt-4 text-center pointer-events-none">
               <div className="text-xs text-slate-400 font-medium uppercase">Всього</div>
               <div className="text-xl font-bold text-slate-900">$1.27M</div>
            </div>
         </div>
       </div>
-
     </div>
 
     {/* BANNER CROSSCHECK */}
@@ -284,7 +285,7 @@ const DashboardView = ({ setView }) => (
        <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl p-6 text-white shadow-lg flex flex-col justify-between">
           <div>
             <h3 className="font-bold text-lg mb-2">Потрібні добрива?</h3>
-            <p className="text-blue-100 text-sm mb-4">Обміняйте ваше зерно на МТЦ без грошей через аграрну ноту. Миттєве погодження.</p>
+            <p className="text-blue-100 text-sm mb-4">Обміняйте ваше зерно на МТР без грошей через аграрну ноту. Миттєве погодження.</p>
           </div>
           <button 
             onClick={() => setView('marketplace')}
@@ -334,7 +335,16 @@ const DashboardView = ({ setView }) => (
 
 // --- ГОЛОВНИЙ ДОДАТОК (APP) ---
 export default function App() {
+  const [isStarted, setIsStarted] = useState(false);
   const [currentView, setCurrentView] = useState('dashboard');
+
+  const handleStart = () => {
+    setIsStarted(true);
+  };
+
+  if (!isStarted) {
+    return <LandingPage onStart={handleStart} />;
+  }
 
   const renderContent = () => {
     switch(currentView) {
@@ -365,7 +375,7 @@ export default function App() {
             <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold">YK</div>
             <div>
               <div className="text-sm font-medium">Yuriy Kravchuk</div>
-              <div className="text-xs text-slate-500">EKVIVALENT TRADE Ltd.</div>
+              <div className="text-xs text-slate-500">Agro-Invest Ltd.</div>
             </div>
           </div>
         </div>
@@ -375,7 +385,7 @@ export default function App() {
           <div>
             <h1 className="text-2xl font-bold text-slate-900">
               {currentView === 'dashboard' && 'Кабінет Юрія Кравчука'}
-              {currentView === 'marketplace' && 'Маркетплейс МТЦ'}
+              {currentView === 'marketplace' && 'Маркетплейс МТР'}
               {currentView === 'contracts' && 'Мої Контракти'}
             </h1>
             <p className="text-slate-500 text-sm">Останнє оновлення: Сьогодні, 17:15 (Київ)</p>
@@ -383,7 +393,7 @@ export default function App() {
           <div className="flex items-center gap-4">
              <div className="hidden md:flex flex-col items-end mr-4">
                 <span className="text-xs text-slate-400 uppercase font-semibold">Загальна Ліквідність</span>
-                <span className="text-lg font-bold text-slate-900">₴ 54,230,000</span>
+                <span className="text-lg font-bold text-slate-900">₴ 48,250,000</span>
              </div>
             <button className="p-2 text-slate-400 hover:text-slate-600 hover:bg-white rounded-full transition-colors relative">
               <Bell size={20} />
